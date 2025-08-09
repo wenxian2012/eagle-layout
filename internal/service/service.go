@@ -8,7 +8,6 @@ import (
 
 // ServiceSet is service providers.
 var ServiceSet = wire.NewSet(
-	NewUserServiceServer, // for grpc(inlucde http from grpc)
-	NewUserService,       // for http
+	NewUserService, // for http
 	repository.RepositorySet,
 )

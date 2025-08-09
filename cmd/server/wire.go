@@ -6,7 +6,6 @@ package main
 import (
 	eagle "github.com/go-eagle/eagle/pkg/app"
 	logger "github.com/go-eagle/eagle/pkg/log"
-	"github.com/go-eagle/eagle/pkg/transport/grpc"
 	httpSrv "github.com/go-eagle/eagle/pkg/transport/http"
 	"github.com/google/wire"
 
@@ -21,7 +20,7 @@ func InitApp(cfg *eagle.Config) (*eagle.App, func(), error) {
 	return &eagle.App{}, nil, nil
 }
 
-func newApp(cfg *eagle.Config, hs *httpSrv.Server, gs *grpc.Server) *eagle.App {
+func newApp(cfg *eagle.Config, hs *httpSrv.Server) *eagle.App {
 	return eagle.New(
 		eagle.WithName(cfg.Name),
 		eagle.WithVersion(cfg.Version),
@@ -29,8 +28,6 @@ func newApp(cfg *eagle.Config, hs *httpSrv.Server, gs *grpc.Server) *eagle.App {
 		eagle.WithServer(
 			// init HTTP server
 			hs,
-			// init GRPC server
-			gs,
 		),
 	)
 }

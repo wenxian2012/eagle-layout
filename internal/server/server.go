@@ -10,7 +10,6 @@ import (
 // if you want to add rabbitmq, you can append NewRabbitmqConsumerServer in NewSet
 var ServerSet = wire.NewSet(
 	NewHTTPServer,
-	NewGRPCServer,
 	NewRedisConsumerServer,
 	service.ServiceSet,
 )
