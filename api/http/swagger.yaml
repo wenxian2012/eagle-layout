@@ -1,0 +1,31 @@
+basePath: /v1
+host: localhost:8080
+info:
+  contact: {}
+  description: eagle demo
+  title: eagle docs api
+  version: "1.0"
+paths:
+  /v1/auth/Register:
+    post:
+      consumes:
+      - application/json
+      description: demo
+      produces:
+      - application/json
+      responses: {}
+      summary: 用户名和密码登录
+      tags:
+      - user
+  /v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: demo
+      produces:
+      - application/json
+      responses: {}
+      summary: 用户名和密码登录
+      tags:
+      - user
+swagger: "2.0"

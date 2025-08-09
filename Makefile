@@ -112,13 +112,13 @@ clean:
 # gen swagger doc
 docs:
 	@if ! which swag &>/dev/null; then \
-  		echo "downloading swag"; \
+  		echo "gen-docs start"; \
   		go get -u github.com/swaggo/swag/cmd/swag; \
   	fi
-	@swag init
-	@mv docs/docs.go api/http
-	@mv docs/swagger.json api/http
-	@mv docs/swagger.yaml api/http
+	@swag init -g cmd/server/main.go
+	@mv docs/docs.go api/http/docs.go
+	@mv docs/swagger.json api/http/swagger.json
+	@mv docs/swagger.yaml api/http/swagger.yaml
 	@echo "gen-docs done"
 	@echo "see docs by: http://localhost:8080/swagger/index.html"
 

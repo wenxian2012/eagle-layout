@@ -1,0 +1,45 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "eagle demo",
+        "title": "eagle docs api",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/v1",
+    "paths": {
+        "/v1/auth/Register": {
+            "post": {
+                "description": "demo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "用户名和密码登录",
+                "responses": {}
+            }
+        },
+        "/v1/auth/login": {
+            "post": {
+                "description": "demo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "用户名和密码登录",
+                "responses": {}
+            }
+        }
+    }
+}
