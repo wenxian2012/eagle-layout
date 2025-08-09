@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"github.com/go-eagle/eagle-layout/api/vo"
 	"time"
 
 	"github.com/jinzhu/copier"
@@ -15,7 +16,6 @@ import (
 	"github.com/go-eagle/eagle-layout/internal/ecode"
 	"github.com/go-eagle/eagle-layout/internal/repository"
 	"github.com/go-eagle/eagle-layout/internal/tasks"
-	"github.com/go-eagle/eagle-layout/internal/types"
 	"github.com/go-eagle/eagle/pkg/app"
 	"github.com/go-eagle/eagle/pkg/auth"
 	"github.com/go-eagle/eagle/pkg/errcode"
@@ -369,7 +369,7 @@ func convertUser(u *model.UserInfoModel) (*pb.User, error) {
 	if u == nil {
 		return nil, nil
 	}
-	user := &types.User{
+	user := &vo.User{
 		Id:        u.ID,
 		Username:  u.Username,
 		Phone:     u.Phone,

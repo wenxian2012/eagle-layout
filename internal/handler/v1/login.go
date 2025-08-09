@@ -23,7 +23,7 @@ func NewLoginHandler(userService service.UserService) *LoginHandler {
 // @Tags user
 // @Accept  json
 // @Produce  json
-// @Router /v1/auth/login [post]
+// @Router /v2/auth/login [post]
 func (h *LoginHandler) LoginHandler(c *gin.Context) {
 	// 从请求中提取参数（例如 JSON 或表单参数）
 	var loginRequest struct {

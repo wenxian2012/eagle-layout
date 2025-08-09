@@ -23,7 +23,7 @@ func NewRegisterHandler(userService service.UserService) *RegisterHandler {
 // @Tags user
 // @Accept  json
 // @Produce  json
-// @Router /v1/auth/Register [post]
+// @Router /v2/auth/Register [post]
 func (h *RegisterHandler) RegisterHandler(c *gin.Context) {
 	// 从请求中提取参数（例如 JSON 或表单参数）
 	var RegisterRequest struct {

@@ -13,11 +13,13 @@ import (
 var HandlerSet = wire.NewSet(
 	v1.NewLoginHandler,
 	v1.NewRegisterHandler,
+	v1.NewUserHandler,
 )
 
 type Handler struct {
 	Login    *v1.LoginHandler
 	Register *v1.RegisterHandler
+	User     *v1.UserHandler
 }
 
 var (

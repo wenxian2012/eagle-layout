@@ -49,12 +49,33 @@ func NewRouter() *gin.Engine {
 	g.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	// v1 router
-	apiV1 := g.Group("/v2")
+	apiV1 := g.Group("/v1")
 	apiV1.Use()
 	{
-		// here to add biz router
-		apiV1.POST("/auth/register", handler.Handle.Register.RegisterHandler)
-		apiV1.POST("/auth/login", handler.Handle.Login.LoginHandler)
+		// 认证相关路由
+		auth := apiV1.Group("/auth")
+		{
+			auth.POST("/register", handler.Handle.User.Register)
+			auth.POST("/login", handler.Handle.User.Login)
+			auth.POST("/logout", handler.Handle.User.Logout)
+		}
+
+		// 用户相关路由
+		users := apiV1.Group("/users")
+		{
+			users.POST("", handler.Handle.User.CreateUser)             // 创建用户
+			users.GET("/:id", handler.Handle.User.GetUser)             // 获取单个用户
+			users.PUT("", handler.Handle.User.UpdateUser)              // 更新用户信息
+			users.PUT("/password", handler.Handle.User.UpdatePassword) // 更新密码
+			users.POST("/batch", handler.Handle.User.BatchGetUsers)    // 批量获取用户
+		}
+	}
+
+	apiV2 := g.Group("/v2")
+	apiV2.Use()
+	{
+		apiV2.POST("/auth/register", handler.Handle.Register.RegisterHandler)
+		apiV2.POST("/auth/login", handler.Handle.Login.LoginHandler)
 	}
 
 	return g

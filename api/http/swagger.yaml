@@ -1,4 +1,214 @@
 basePath: /v1
+definitions:
+  types.BatchGetUsersRequest:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    required:
+    - ids
+    type: object
+  types.BatchGetUsersResponse:
+    properties:
+      users:
+        items:
+          $ref: '#/definitions/types.User'
+        type: array
+    type: object
+  types.CreateUserRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+  types.CreateUserResponse:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      username:
+        type: string
+    type: object
+  types.GetUserResponse:
+    properties:
+      user:
+        $ref: '#/definitions/types.User'
+    type: object
+  types.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    type: object
+  types.LoginResponse:
+    properties:
+      access_token:
+        type: string
+      id:
+        type: integer
+      refresh_token:
+        type: string
+    type: object
+  types.LogoutRequest:
+    properties:
+      access_token:
+        type: string
+      id:
+        type: integer
+    required:
+    - access_token
+    - id
+    type: object
+  types.LogoutResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  types.RegisterRequest:
+    properties:
+      email:
+        type: string
+      password:
+        maxLength: 100
+        minLength: 6
+        type: string
+      username:
+        maxLength: 50
+        minLength: 3
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+  types.RegisterResponse:
+    properties:
+      id:
+        type: integer
+      username:
+        type: string
+    type: object
+  types.UpdatePasswordRequest:
+    properties:
+      confirm_password:
+        type: string
+      id:
+        type: string
+      new_password:
+        type: string
+      password:
+        type: string
+    required:
+    - confirm_password
+    - id
+    - new_password
+    - password
+    type: object
+  types.UpdatePasswordResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  types.UpdateUserRequest:
+    properties:
+      avatar:
+        type: string
+      bio:
+        type: string
+      birthday:
+        type: string
+      email:
+        type: string
+      gender:
+        type: integer
+      login_at:
+        type: integer
+      nickname:
+        type: string
+      phone:
+        type: string
+      status:
+        type: integer
+      user_id:
+        type: integer
+      username:
+        type: string
+    required:
+    - user_id
+    type: object
+  types.UpdateUserResponse:
+    properties:
+      avatar:
+        type: string
+      bio:
+        type: string
+      birthday:
+        type: string
+      email:
+        type: string
+      gender:
+        type: integer
+      login_at:
+        type: integer
+      nickname:
+        type: string
+      phone:
+        type: string
+      status:
+        type: integer
+      updated_at:
+        type: integer
+      user_id:
+        type: integer
+      username:
+        type: string
+    type: object
+  types.User:
+    properties:
+      avatar:
+        type: string
+      bio:
+        type: string
+      birthday:
+        type: string
+      created_at:
+        type: integer
+      email:
+        type: string
+      gender:
+        type: integer
+      id:
+        type: integer
+      login_at:
+        description: login time for last times
+        type: integer
+      nickname:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      status:
+        type: integer
+      updated_at:
+        type: integer
+      username:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -6,7 +216,247 @@ info:
   title: eagle docs api
   version: "1.0"
 paths:
-  /v1/auth/Register:
+  /v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户使用用户名/邮箱和密码进行登录
+      parameters:
+      - description: 登录请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/types.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登录成功
+          schema:
+            $ref: '#/definitions/types.LoginResponse'
+        "400":
+          description: 请求参数错误
+          schema: {}
+        "401":
+          description: 认证失败
+          schema: {}
+        "500":
+          description: 内部服务器错误
+          schema: {}
+      summary: 用户登录
+      tags:
+      - user
+  /v1/auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: 用户退出登录
+      parameters:
+      - description: 登出请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/types.LogoutRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登出成功
+          schema:
+            $ref: '#/definitions/types.LogoutResponse'
+        "400":
+          description: 请求参数错误
+          schema: {}
+        "401":
+          description: 认证失败
+          schema: {}
+        "500":
+          description: 内部服务器错误
+          schema: {}
+      summary: 用户登出
+      tags:
+      - user
+  /v1/auth/register:
+    post:
+      consumes:
+      - application/json
+      description: 用户使用用户名、邮箱和密码进行注册
+      parameters:
+      - description: 注册请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/types.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 注册成功
+          schema:
+            $ref: '#/definitions/types.RegisterResponse'
+        "400":
+          description: 请求参数错误
+          schema: {}
+        "500":
+          description: 内部服务器错误
+          schema: {}
+      summary: 用户注册
+      tags:
+      - user
+  /v1/users:
+    post:
+      consumes:
+      - application/json
+      description: 管理员创建新用户
+      parameters:
+      - description: 创建用户请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/types.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/types.CreateUserResponse'
+        "400":
+          description: 请求参数错误
+          schema: {}
+        "500":
+          description: 内部服务器错误
+          schema: {}
+      summary: 创建用户
+      tags:
+      - user
+    put:
+      consumes:
+      - application/json
+      description: 更新用户的基本信息
+      parameters:
+      - description: 更新用户请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/types.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功
+          schema:
+            $ref: '#/definitions/types.UpdateUserResponse'
+        "400":
+          description: 请求参数错误
+          schema: {}
+        "404":
+          description: 用户不存在
+          schema: {}
+        "500":
+          description: 内部服务器错误
+          schema: {}
+      summary: 更新用户信息
+      tags:
+      - user
+  /v1/users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 根据用户ID获取用户详细信息
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            $ref: '#/definitions/types.GetUserResponse'
+        "400":
+          description: 请求参数错误
+          schema: {}
+        "404":
+          description: 用户不存在
+          schema: {}
+        "500":
+          description: 内部服务器错误
+          schema: {}
+      summary: 获取用户信息
+      tags:
+      - user
+  /v1/users/batch:
+    post:
+      consumes:
+      - application/json
+      description: 根据用户ID列表批量获取用户信息
+      parameters:
+      - description: 批量获取用户请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/types.BatchGetUsersRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            $ref: '#/definitions/types.BatchGetUsersResponse'
+        "400":
+          description: 请求参数错误
+          schema: {}
+        "500":
+          description: 内部服务器错误
+          schema: {}
+      summary: 批量获取用户信息
+      tags:
+      - user
+  /v1/users/password:
+    put:
+      consumes:
+      - application/json
+      description: 用户更新自己的密码
+      parameters:
+      - description: 更新密码请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/types.UpdatePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功
+          schema:
+            $ref: '#/definitions/types.UpdatePasswordResponse'
+        "400":
+          description: 请求参数错误
+          schema: {}
+        "401":
+          description: 原密码错误
+          schema: {}
+        "404":
+          description: 用户不存在
+          schema: {}
+        "500":
+          description: 内部服务器错误
+          schema: {}
+      summary: 更新用户密码
+      tags:
+      - user
+  /v2/auth/Register:
     post:
       consumes:
       - application/json
@@ -17,7 +467,7 @@ paths:
       summary: 用户名和密码登录
       tags:
       - user
-  /v1/auth/login:
+  /v2/auth/login:
     post:
       consumes:
       - application/json
