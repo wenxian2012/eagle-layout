@@ -1,6 +1,6 @@
 basePath: /v1
 definitions:
-  types.BatchGetUsersRequest:
+  req.BatchGetUsersRequest:
     properties:
       ids:
         items:
@@ -9,14 +9,7 @@ definitions:
     required:
     - ids
     type: object
-  types.BatchGetUsersResponse:
-    properties:
-      users:
-        items:
-          $ref: '#/definitions/types.User'
-        type: array
-    type: object
-  types.CreateUserRequest:
+  req.CreateUserRequest:
     properties:
       email:
         type: string
@@ -29,21 +22,7 @@ definitions:
     - password
     - username
     type: object
-  types.CreateUserResponse:
-    properties:
-      email:
-        type: string
-      id:
-        type: integer
-      username:
-        type: string
-    type: object
-  types.GetUserResponse:
-    properties:
-      user:
-        $ref: '#/definitions/types.User'
-    type: object
-  types.LoginRequest:
+  req.LoginRequest:
     properties:
       email:
         type: string
@@ -54,16 +33,7 @@ definitions:
     required:
     - password
     type: object
-  types.LoginResponse:
-    properties:
-      access_token:
-        type: string
-      id:
-        type: integer
-      refresh_token:
-        type: string
-    type: object
-  types.LogoutRequest:
+  req.LogoutRequest:
     properties:
       access_token:
         type: string
@@ -73,12 +43,7 @@ definitions:
     - access_token
     - id
     type: object
-  types.LogoutResponse:
-    properties:
-      message:
-        type: string
-    type: object
-  types.RegisterRequest:
+  req.RegisterRequest:
     properties:
       email:
         type: string
@@ -95,14 +60,7 @@ definitions:
     - password
     - username
     type: object
-  types.RegisterResponse:
-    properties:
-      id:
-        type: integer
-      username:
-        type: string
-    type: object
-  types.UpdatePasswordRequest:
+  req.UpdatePasswordRequest:
     properties:
       confirm_password:
         type: string
@@ -118,12 +76,7 @@ definitions:
     - new_password
     - password
     type: object
-  types.UpdatePasswordResponse:
-    properties:
-      message:
-        type: string
-    type: object
-  types.UpdateUserRequest:
+  req.UpdateUserRequest:
     properties:
       avatar:
         type: string
@@ -150,7 +103,54 @@ definitions:
     required:
     - user_id
     type: object
-  types.UpdateUserResponse:
+  vo.BatchGetUsersResponse:
+    properties:
+      users:
+        items:
+          $ref: '#/definitions/vo.User'
+        type: array
+    type: object
+  vo.CreateUserResponse:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      username:
+        type: string
+    type: object
+  vo.GetUserResponse:
+    properties:
+      user:
+        $ref: '#/definitions/vo.User'
+    type: object
+  vo.LoginResponse:
+    properties:
+      access_token:
+        type: string
+      id:
+        type: integer
+      refresh_token:
+        type: string
+    type: object
+  vo.LogoutResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  vo.RegisterResponse:
+    properties:
+      id:
+        type: integer
+      username:
+        type: string
+    type: object
+  vo.UpdatePasswordResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  vo.UpdateUserResponse:
     properties:
       avatar:
         type: string
@@ -177,7 +177,7 @@ definitions:
       username:
         type: string
     type: object
-  types.User:
+  vo.User:
     properties:
       avatar:
         type: string
@@ -227,14 +227,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/types.LoginRequest'
+          $ref: '#/definitions/req.LoginRequest'
       produces:
       - application/json
       responses:
         "200":
           description: 登录成功
           schema:
-            $ref: '#/definitions/types.LoginResponse'
+            $ref: '#/definitions/vo.LoginResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -258,14 +258,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/types.LogoutRequest'
+          $ref: '#/definitions/req.LogoutRequest'
       produces:
       - application/json
       responses:
         "200":
           description: 登出成功
           schema:
-            $ref: '#/definitions/types.LogoutResponse'
+            $ref: '#/definitions/vo.LogoutResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -289,14 +289,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/types.RegisterRequest'
+          $ref: '#/definitions/req.RegisterRequest'
       produces:
       - application/json
       responses:
         "200":
           description: 注册成功
           schema:
-            $ref: '#/definitions/types.RegisterResponse'
+            $ref: '#/definitions/vo.RegisterResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -317,14 +317,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/types.CreateUserRequest'
+          $ref: '#/definitions/req.CreateUserRequest'
       produces:
       - application/json
       responses:
         "200":
           description: 创建成功
           schema:
-            $ref: '#/definitions/types.CreateUserResponse'
+            $ref: '#/definitions/vo.CreateUserResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -344,14 +344,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/types.UpdateUserRequest'
+          $ref: '#/definitions/req.UpdateUserRequest'
       produces:
       - application/json
       responses:
         "200":
           description: 更新成功
           schema:
-            $ref: '#/definitions/types.UpdateUserResponse'
+            $ref: '#/definitions/vo.UpdateUserResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -381,7 +381,7 @@ paths:
         "200":
           description: 获取成功
           schema:
-            $ref: '#/definitions/types.GetUserResponse'
+            $ref: '#/definitions/vo.GetUserResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -405,14 +405,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/types.BatchGetUsersRequest'
+          $ref: '#/definitions/req.BatchGetUsersRequest'
       produces:
       - application/json
       responses:
         "200":
           description: 获取成功
           schema:
-            $ref: '#/definitions/types.BatchGetUsersResponse'
+            $ref: '#/definitions/vo.BatchGetUsersResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -433,14 +433,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/types.UpdatePasswordRequest'
+          $ref: '#/definitions/req.UpdatePasswordRequest'
       produces:
       - application/json
       responses:
         "200":
           description: 更新成功
           schema:
-            $ref: '#/definitions/types.UpdatePasswordResponse'
+            $ref: '#/definitions/vo.UpdatePasswordResponse'
         "400":
           description: 请求参数错误
           schema: {}

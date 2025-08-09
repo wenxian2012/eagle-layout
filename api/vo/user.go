@@ -1,21 +1,23 @@
 package vo
 
+import "time"
+
 // User include user base info and user profile
 type User struct {
-	Id        int64  `json:"id"`
-	Username  string `json:"username"`
-	Phone     string `json:"phone"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
-	LoginAt   int64  `json:"login_at"` // login time for last times
-	Status    int32  `json:"status"`
-	Nickname  string `json:"nickname"`
-	Avatar    string `json:"avatar"`
-	Gender    int32  `json:"gender"`
-	Birthday  string `json:"birthday"`
-	Bio       string `json:"bio"`
-	CreatedAt int64  `json:"created_at"`
-	UpdatedAt int64  `json:"updated_at"`
+	Id        int64      `json:"id"`
+	Username  string     `json:"username"`
+	Phone     string     `json:"phone"`
+	Email     string     `json:"email"`
+	Password  string     `json:"password"`
+	Status    int32      `json:"status"`
+	Nickname  string     `json:"nickname"`
+	Avatar    string     `json:"avatar"`
+	Gender    int32      `json:"gender"`
+	Birthday  string     `json:"birthday"`
+	Bio       string     `json:"bio"`
+	LoginAt   *time.Time `json:"login_at"` // login time for last times
+	CreatedAt *time.Time `json:"created_at"`
+	UpdatedAt *time.Time `json:"updated_at"`
 }
 
 // RegisterResponse 用户注册响应
@@ -45,18 +47,19 @@ type CreateUserResponse struct {
 
 // UpdateUserResponse 更新用户响应
 type UpdateUserResponse struct {
-	UserID    int64  `json:"user_id"`
-	Username  string `json:"username,omitempty"`
-	Email     string `json:"email,omitempty"`
-	Phone     string `json:"phone,omitempty"`
-	LoginAt   int64  `json:"login_at,omitempty"`
-	Status    int32  `json:"status,omitempty"`
-	Nickname  string `json:"nickname,omitempty"`
-	Avatar    string `json:"avatar,omitempty"`
-	Gender    int32  `json:"gender,omitempty"`
-	Birthday  string `json:"birthday,omitempty"`
-	Bio       string `json:"bio,omitempty"`
-	UpdatedAt int64  `json:"updated_at"`
+	UserID    int64      `json:"user_id"`
+	Username  string     `json:"username,omitempty"`
+	Email     string     `json:"email,omitempty"`
+	Phone     string     `json:"phone,omitempty"`
+	Status    int32      `json:"status,omitempty"`
+	Nickname  string     `json:"nickname,omitempty"`
+	Avatar    string     `json:"avatar,omitempty"`
+	Gender    int32      `json:"gender,omitempty"`
+	Birthday  string     `json:"birthday,omitempty"`
+	Bio       string     `json:"bio,omitempty"`
+	LoginAt   *time.Time `json:"login_at"` // login time for last times
+	CreatedAt *time.Time `json:"created_at"`
+	UpdatedAt *time.Time `json:"updated_at"`
 }
 
 // UpdatePasswordResponse 更新密码响应

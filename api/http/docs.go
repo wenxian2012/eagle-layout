@@ -35,7 +35,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.LoginRequest"
+                            "$ref": "#/definitions/req.LoginRequest"
                         }
                     }
                 ],
@@ -43,7 +43,7 @@ const docTemplate = `{
                     "200": {
                         "description": "登录成功",
                         "schema": {
-                            "$ref": "#/definitions/types.LoginResponse"
+                            "$ref": "#/definitions/vo.LoginResponse"
                         }
                     },
                     "400": {
@@ -81,7 +81,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.LogoutRequest"
+                            "$ref": "#/definitions/req.LogoutRequest"
                         }
                     }
                 ],
@@ -89,7 +89,7 @@ const docTemplate = `{
                     "200": {
                         "description": "登出成功",
                         "schema": {
-                            "$ref": "#/definitions/types.LogoutResponse"
+                            "$ref": "#/definitions/vo.LogoutResponse"
                         }
                     },
                     "400": {
@@ -127,7 +127,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.RegisterRequest"
+                            "$ref": "#/definitions/req.RegisterRequest"
                         }
                     }
                 ],
@@ -135,7 +135,7 @@ const docTemplate = `{
                     "200": {
                         "description": "注册成功",
                         "schema": {
-                            "$ref": "#/definitions/types.RegisterResponse"
+                            "$ref": "#/definitions/vo.RegisterResponse"
                         }
                     },
                     "400": {
@@ -169,7 +169,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.UpdateUserRequest"
+                            "$ref": "#/definitions/req.UpdateUserRequest"
                         }
                     }
                 ],
@@ -177,7 +177,7 @@ const docTemplate = `{
                     "200": {
                         "description": "更新成功",
                         "schema": {
-                            "$ref": "#/definitions/types.UpdateUserResponse"
+                            "$ref": "#/definitions/vo.UpdateUserResponse"
                         }
                     },
                     "400": {
@@ -213,7 +213,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.CreateUserRequest"
+                            "$ref": "#/definitions/req.CreateUserRequest"
                         }
                     }
                 ],
@@ -221,7 +221,7 @@ const docTemplate = `{
                     "200": {
                         "description": "创建成功",
                         "schema": {
-                            "$ref": "#/definitions/types.CreateUserResponse"
+                            "$ref": "#/definitions/vo.CreateUserResponse"
                         }
                     },
                     "400": {
@@ -255,7 +255,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.BatchGetUsersRequest"
+                            "$ref": "#/definitions/req.BatchGetUsersRequest"
                         }
                     }
                 ],
@@ -263,7 +263,7 @@ const docTemplate = `{
                     "200": {
                         "description": "获取成功",
                         "schema": {
-                            "$ref": "#/definitions/types.BatchGetUsersResponse"
+                            "$ref": "#/definitions/vo.BatchGetUsersResponse"
                         }
                     },
                     "400": {
@@ -297,7 +297,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.UpdatePasswordRequest"
+                            "$ref": "#/definitions/req.UpdatePasswordRequest"
                         }
                     }
                 ],
@@ -305,7 +305,7 @@ const docTemplate = `{
                     "200": {
                         "description": "更新成功",
                         "schema": {
-                            "$ref": "#/definitions/types.UpdatePasswordResponse"
+                            "$ref": "#/definitions/vo.UpdatePasswordResponse"
                         }
                     },
                     "400": {
@@ -353,7 +353,7 @@ const docTemplate = `{
                     "200": {
                         "description": "获取成功",
                         "schema": {
-                            "$ref": "#/definitions/types.GetUserResponse"
+                            "$ref": "#/definitions/vo.GetUserResponse"
                         }
                     },
                     "400": {
@@ -405,7 +405,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "types.BatchGetUsersRequest": {
+        "req.BatchGetUsersRequest": {
             "type": "object",
             "required": [
                 "ids"
@@ -419,18 +419,7 @@ const docTemplate = `{
                 }
             }
         },
-        "types.BatchGetUsersResponse": {
-            "type": "object",
-            "properties": {
-                "users": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/types.User"
-                    }
-                }
-            }
-        },
-        "types.CreateUserRequest": {
+        "req.CreateUserRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -449,29 +438,7 @@ const docTemplate = `{
                 }
             }
         },
-        "types.CreateUserResponse": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "types.GetUserResponse": {
-            "type": "object",
-            "properties": {
-                "user": {
-                    "$ref": "#/definitions/types.User"
-                }
-            }
-        },
-        "types.LoginRequest": {
+        "req.LoginRequest": {
             "type": "object",
             "required": [
                 "password"
@@ -488,21 +455,7 @@ const docTemplate = `{
                 }
             }
         },
-        "types.LoginResponse": {
-            "type": "object",
-            "properties": {
-                "access_token": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "refresh_token": {
-                    "type": "string"
-                }
-            }
-        },
-        "types.LogoutRequest": {
+        "req.LogoutRequest": {
             "type": "object",
             "required": [
                 "access_token",
@@ -517,15 +470,7 @@ const docTemplate = `{
                 }
             }
         },
-        "types.LogoutResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "types.RegisterRequest": {
+        "req.RegisterRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -548,18 +493,7 @@ const docTemplate = `{
                 }
             }
         },
-        "types.RegisterResponse": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "types.UpdatePasswordRequest": {
+        "req.UpdatePasswordRequest": {
             "type": "object",
             "required": [
                 "confirm_password",
@@ -582,15 +516,7 @@ const docTemplate = `{
                 }
             }
         },
-        "types.UpdatePasswordResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "types.UpdateUserRequest": {
+        "req.UpdateUserRequest": {
             "type": "object",
             "required": [
                 "user_id"
@@ -631,7 +557,81 @@ const docTemplate = `{
                 }
             }
         },
-        "types.UpdateUserResponse": {
+        "vo.BatchGetUsersResponse": {
+            "type": "object",
+            "properties": {
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/vo.User"
+                    }
+                }
+            }
+        },
+        "vo.CreateUserResponse": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "vo.GetUserResponse": {
+            "type": "object",
+            "properties": {
+                "user": {
+                    "$ref": "#/definitions/vo.User"
+                }
+            }
+        },
+        "vo.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "refresh_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "vo.LogoutResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "vo.RegisterResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "vo.UpdatePasswordResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "vo.UpdateUserResponse": {
             "type": "object",
             "properties": {
                 "avatar": {
@@ -672,7 +672,7 @@ const docTemplate = `{
                 }
             }
         },
-        "types.User": {
+        "vo.User": {
             "type": "object",
             "properties": {
                 "avatar": {

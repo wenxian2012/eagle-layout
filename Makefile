@@ -44,6 +44,7 @@ run: wire
 .PHONY: wire
 # make wire, generate wire_gen.go
 wire:
+	cd internal/handler && wire
 	cd cmd/server && wire
 
 .PHONY: fmt

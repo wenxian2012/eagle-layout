@@ -38,9 +38,9 @@ func newUserInfoModel(db *gorm.DB, opts ...gen.DOOption) userInfoModel {
 	_userInfoModel.Phone = field.NewString(tableName, "phone")
 	_userInfoModel.Email = field.NewString(tableName, "email")
 	_userInfoModel.Bio = field.NewString(tableName, "bio")
-	_userInfoModel.CreatedAt = field.NewInt64(tableName, "created_at")
-	_userInfoModel.UpdatedAt = field.NewInt64(tableName, "updated_at")
-	_userInfoModel.LoginAt = field.NewInt64(tableName, "login_at")
+	_userInfoModel.CreatedAt = field.NewTime(tableName, "created_at")
+	_userInfoModel.UpdatedAt = field.NewTime(tableName, "updated_at")
+	_userInfoModel.LoginAt = field.NewTime(tableName, "login_at")
 	_userInfoModel.Status = field.NewInt32(tableName, "status")
 
 	_userInfoModel.fillFieldMap()
@@ -48,7 +48,6 @@ func newUserInfoModel(db *gorm.DB, opts ...gen.DOOption) userInfoModel {
 	return _userInfoModel
 }
 
-// userInfoModel 用户表
 type userInfoModel struct {
 	userInfoModelDo userInfoModelDo
 
@@ -57,15 +56,15 @@ type userInfoModel struct {
 	Username  field.String
 	Nickname  field.String // 用户昵称
 	Password  field.String
-	Avatar    field.String // 头像
+	Avatar    field.String
 	Gender    field.Int32
 	Birthday  field.String
 	Phone     field.String // 手机号
 	Email     field.String // 邮箱
 	Bio       field.String
-	CreatedAt field.Int64
-	UpdatedAt field.Int64
-	LoginAt   field.Int64
+	CreatedAt field.Time
+	UpdatedAt field.Time
+	LoginAt   field.Time
 	Status    field.Int32
 
 	fieldMap map[string]field.Expr
@@ -93,9 +92,9 @@ func (u *userInfoModel) updateTableName(table string) *userInfoModel {
 	u.Phone = field.NewString(table, "phone")
 	u.Email = field.NewString(table, "email")
 	u.Bio = field.NewString(table, "bio")
-	u.CreatedAt = field.NewInt64(table, "created_at")
-	u.UpdatedAt = field.NewInt64(table, "updated_at")
-	u.LoginAt = field.NewInt64(table, "login_at")
+	u.CreatedAt = field.NewTime(table, "created_at")
+	u.UpdatedAt = field.NewTime(table, "updated_at")
+	u.LoginAt = field.NewTime(table, "login_at")
 	u.Status = field.NewInt32(table, "status")
 
 	u.fillFieldMap()

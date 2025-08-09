@@ -3,8 +3,6 @@ package service
 import (
 	"context"
 	"errors"
-	"time"
-
 	"github.com/go-eagle/eagle-layout/api/req"
 	"github.com/go-eagle/eagle-layout/api/vo"
 
@@ -196,7 +194,7 @@ func (s *userHTTPService) UpdateUser(ctx context.Context, req *req.UpdateUserReq
 		Birthday:  req.Birthday,
 		Bio:       req.Bio,
 		Status:    req.Status,
-		UpdatedAt: time.Now().Unix(),
+		UpdatedAt: timePtr(),
 	}
 	err := s.repo.UpdateUser(ctx, req.UserID, user)
 	if err != nil {
@@ -213,7 +211,7 @@ func (s *userHTTPService) UpdateUser(ctx context.Context, req *req.UpdateUserReq
 		Birthday:  req.Birthday,
 		Bio:       req.Bio,
 		Status:    req.Status,
-		UpdatedAt: time.Now().Unix(),
+		UpdatedAt: timePtr(),
 	}, nil
 }
 
@@ -251,7 +249,7 @@ func (s *userHTTPService) UpdatePassword(ctx context.Context, req *req.UpdatePas
 
 	data := model.UserInfoModel{
 		Password:  newPwd,
-		UpdatedAt: time.Now().Unix(),
+		UpdatedAt: timePtr(),
 	}
 	err = s.repo.UpdateUser(ctx, user.ID, data)
 	if err != nil {
@@ -329,7 +327,7 @@ func (s *userHTTPService) newUser(username, email, password string) (model.UserI
 		Email:     email,
 		Password:  password,
 		Status:    1, // 正常状态
-		CreatedAt: time.Now().Unix(),
+		CreatedAt: timePtr(),
 	}, nil
 }
 

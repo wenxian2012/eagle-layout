@@ -3,8 +3,9 @@ package service
 import (
 	"context"
 	"errors"
-	"github.com/go-eagle/eagle-layout/api/vo"
 	"time"
+
+	"github.com/go-eagle/eagle-layout/api/vo"
 
 	"github.com/jinzhu/copier"
 	"github.com/spf13/cast"
@@ -20,6 +21,12 @@ import (
 	"github.com/go-eagle/eagle/pkg/auth"
 	"github.com/go-eagle/eagle/pkg/errcode"
 )
+
+// timePtr 返回当前时间的指针
+func timePtr() *time.Time {
+	t := time.Now()
+	return &t
+}
 
 var (
 	_ pb.UserServiceServer = (*UserServiceServer)(nil)
@@ -106,7 +113,7 @@ func newUser(username, email, password string) (model.UserInfoModel, error) {
 		Email:     email,
 		Password:  password,
 		Status:    int32(pb.StatusType_NORMAL),
-		CreatedAt: time.Now().Unix(),
+		CreatedAt: timePtr(),
 	}, nil
 }
 
@@ -216,7 +223,6 @@ func (s *UserServiceServer) UpdateUser(ctx context.Context, req *pb.UpdateUserRe
 	if req.UserId == 0 {
 		return nil, ecode.ErrInvalidArgument.Status(req).Err()
 	}
-
 	user := model.UserInfoModel{
 		Nickname: req.Nickname,
 		//Phone:     req.Phone,
@@ -226,7 +232,7 @@ func (s *UserServiceServer) UpdateUser(ctx context.Context, req *pb.UpdateUserRe
 		Birthday:  req.Birthday,
 		Bio:       req.Bio,
 		Status:    cast.ToInt32(req.Status),
-		UpdatedAt: time.Now().Unix(),
+		UpdatedAt: timePtr(),
 	}
 	err := s.repo.UpdateUser(ctx, req.UserId, user)
 	if err != nil {
@@ -286,7 +292,7 @@ func (s *UserServiceServer) UpdatePassword(ctx context.Context, req *pb.UpdatePa
 
 	data := model.UserInfoModel{
 		Password:  newPwd,
-		UpdatedAt: time.Now().Unix(),
+		UpdatedAt: timePtr(),
 	}
 	err = s.repo.UpdateUser(ctx, user.ID, data)
 	if err != nil {
