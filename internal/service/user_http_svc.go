@@ -3,8 +3,9 @@ package service
 import (
 	"context"
 	"errors"
+
 	"github.com/go-eagle/eagle-layout/api/req"
-	"github.com/go-eagle/eagle-layout/api/vo"
+	"github.com/go-eagle/eagle-layout/api/res"
 
 	"github.com/spf13/cast"
 	"gorm.io/gorm"
@@ -20,14 +21,14 @@ import (
 
 // UserHTTPService HTTP 用户服务接口
 type UserHTTPService interface {
-	Register(ctx context.Context, req *req.RegisterRequest) (*vo.RegisterResponse, error)
-	Login(ctx context.Context, req *req.LoginRequest) (*vo.LoginResponse, error)
-	Logout(ctx context.Context, req *req.LogoutRequest) (*vo.LogoutResponse, error)
-	CreateUser(ctx context.Context, req *req.CreateUserRequest) (*vo.CreateUserResponse, error)
-	UpdateUser(ctx context.Context, req *req.UpdateUserRequest) (*vo.UpdateUserResponse, error)
-	UpdatePassword(ctx context.Context, req *req.UpdatePasswordRequest) (*vo.UpdatePasswordResponse, error)
-	GetUser(ctx context.Context, req *req.GetUserRequest) (*vo.GetUserResponse, error)
-	BatchGetUsers(ctx context.Context, req *req.BatchGetUsersRequest) (*vo.BatchGetUsersResponse, error)
+	Register(ctx context.Context, req *req.RegisterRequest) (*res.RegisterResponse, error)
+	Login(ctx context.Context, req *req.LoginRequest) (*res.LoginResponse, error)
+	Logout(ctx context.Context, req *req.LogoutRequest) (*res.LogoutResponse, error)
+	CreateUser(ctx context.Context, req *req.CreateUserRequest) (*res.CreateUserResponse, error)
+	UpdateUser(ctx context.Context, req *req.UpdateUserRequest) (*res.UpdateUserResponse, error)
+	UpdatePassword(ctx context.Context, req *req.UpdatePasswordRequest) (*res.UpdatePasswordResponse, error)
+	GetUser(ctx context.Context, req *req.GetUserRequest) (*res.GetUserResponse, error)
+	BatchGetUsers(ctx context.Context, req *req.BatchGetUsersRequest) (*res.BatchGetUsersResponse, error)
 }
 
 type userHTTPService struct {
@@ -41,7 +42,7 @@ func NewUserHTTPService(repo repository.UserRepo) UserHTTPService {
 	}
 }
 
-func (s *userHTTPService) Register(ctx context.Context, req *req.RegisterRequest) (*vo.RegisterResponse, error) {
+func (s *userHTTPService) Register(ctx context.Context, req *req.RegisterRequest) (*res.RegisterResponse, error) {
 	// 检查用户是否已存在
 	userBase, err := s.repo.GetUserByEmail(ctx, req.Email)
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
@@ -81,13 +82,13 @@ func (s *userHTTPService) Register(ctx context.Context, req *req.RegisterRequest
 		return nil, errcode.ErrInternalServer.WithDetails(err.Error())
 	}
 
-	return &vo.RegisterResponse{
+	return &res.RegisterResponse{
 		ID:       uid,
 		Username: req.Username,
 	}, nil
 }
 
-func (s *userHTTPService) Login(ctx context.Context, req *req.LoginRequest) (*vo.LoginResponse, error) {
+func (s *userHTTPService) Login(ctx context.Context, req *req.LoginRequest) (*res.LoginResponse, error) {
 	if len(req.Email) == 0 && len(req.Username) == 0 {
 		return nil, errcode.ErrInvalidParam.WithDetails("email or username is required")
 	}
@@ -130,13 +131,13 @@ func (s *userHTTPService) Login(ctx context.Context, req *req.LoginRequest) (*vo
 		return nil, errcode.ErrToken
 	}
 
-	return &vo.LoginResponse{
+	return &res.LoginResponse{
 		ID:          user.ID,
 		AccessToken: token,
 	}, nil
 }
 
-func (s *userHTTPService) Logout(ctx context.Context, req *req.LogoutRequest) (*vo.LogoutResponse, error) {
+func (s *userHTTPService) Logout(ctx context.Context, req *req.LogoutRequest) (*res.LogoutResponse, error) {
 	c := cache.NewUserTokenCache()
 	// 检查令牌
 	token, err := c.GetUserTokenCache(ctx, req.ID)
@@ -153,12 +154,12 @@ func (s *userHTTPService) Logout(ctx context.Context, req *req.LogoutRequest) (*
 		return nil, errcode.ErrInternalServer.WithDetails(err.Error())
 	}
 
-	return &vo.LogoutResponse{
+	return &res.LogoutResponse{
 		Message: "登出成功",
 	}, nil
 }
 
-func (s *userHTTPService) CreateUser(ctx context.Context, req *req.CreateUserRequest) (*vo.CreateUserResponse, error) {
+func (s *userHTTPService) CreateUser(ctx context.Context, req *req.CreateUserRequest) (*res.CreateUserResponse, error) {
 	// 生成密码哈希
 	pwd, err := auth.HashAndSalt(req.Password)
 	if err != nil {
@@ -175,14 +176,14 @@ func (s *userHTTPService) CreateUser(ctx context.Context, req *req.CreateUserReq
 		return nil, errcode.ErrInternalServer.WithDetails(err.Error())
 	}
 
-	return &vo.CreateUserResponse{
+	return &res.CreateUserResponse{
 		ID:       id,
 		Username: req.Username,
 		Email:    req.Email,
 	}, nil
 }
 
-func (s *userHTTPService) UpdateUser(ctx context.Context, req *req.UpdateUserRequest) (*vo.UpdateUserResponse, error) {
+func (s *userHTTPService) UpdateUser(ctx context.Context, req *req.UpdateUserRequest) (*res.UpdateUserResponse, error) {
 	if req.UserID == 0 {
 		return nil, errcode.ErrInvalidParam.WithDetails("user_id is required")
 	}
@@ -201,7 +202,7 @@ func (s *userHTTPService) UpdateUser(ctx context.Context, req *req.UpdateUserReq
 		return nil, errcode.ErrInternalServer.WithDetails(err.Error())
 	}
 
-	return &vo.UpdateUserResponse{
+	return &res.UpdateUserResponse{
 		UserID:    req.UserID,
 		Nickname:  req.Nickname,
 		Phone:     req.Phone,
@@ -215,7 +216,7 @@ func (s *userHTTPService) UpdateUser(ctx context.Context, req *req.UpdateUserReq
 	}, nil
 }
 
-func (s *userHTTPService) UpdatePassword(ctx context.Context, req *req.UpdatePasswordRequest) (*vo.UpdatePasswordResponse, error) {
+func (s *userHTTPService) UpdatePassword(ctx context.Context, req *req.UpdatePasswordRequest) (*res.UpdatePasswordResponse, error) {
 	if len(req.ID) == 0 {
 		return nil, errcode.ErrInvalidParam.WithDetails("id is required")
 	}
@@ -256,12 +257,12 @@ func (s *userHTTPService) UpdatePassword(ctx context.Context, req *req.UpdatePas
 		return nil, errcode.ErrInternalServer.WithDetails(err.Error())
 	}
 
-	return &vo.UpdatePasswordResponse{
+	return &res.UpdatePasswordResponse{
 		Message: "密码更新成功",
 	}, nil
 }
 
-func (s *userHTTPService) GetUser(ctx context.Context, req *req.GetUserRequest) (*vo.GetUserResponse, error) {
+func (s *userHTTPService) GetUser(ctx context.Context, req *req.GetUserRequest) (*res.GetUserResponse, error) {
 	user, err := s.repo.GetUser(ctx, req.ID)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -275,12 +276,12 @@ func (s *userHTTPService) GetUser(ctx context.Context, req *req.GetUserRequest) 
 		return nil, errcode.ErrInternalServer.WithDetails(err.Error())
 	}
 
-	return &vo.GetUserResponse{
+	return &res.GetUserResponse{
 		User: u,
 	}, nil
 }
 
-func (s *userHTTPService) BatchGetUsers(ctx context.Context, req *req.BatchGetUsersRequest) (*vo.BatchGetUsersResponse, error) {
+func (s *userHTTPService) BatchGetUsers(ctx context.Context, req *req.BatchGetUsersRequest) (*res.BatchGetUsersResponse, error) {
 	// 检查请求是否被取消
 	if ctx.Err() == context.Canceled {
 		return nil, errcode.ErrDeadlineExceeded
@@ -290,7 +291,7 @@ func (s *userHTTPService) BatchGetUsers(ctx context.Context, req *req.BatchGetUs
 		return nil, errcode.ErrInvalidParam.WithDetails("ids is empty")
 	}
 
-	var users []*vo.User
+	var users []*res.User
 
 	// 用户基本信息
 	userBases, err := s.repo.BatchGetUsers(ctx, req.IDs)
@@ -316,7 +317,7 @@ func (s *userHTTPService) BatchGetUsers(ctx context.Context, req *req.BatchGetUs
 		users = append(users, u)
 	}
 
-	return &vo.BatchGetUsersResponse{
+	return &res.BatchGetUsersResponse{
 		Users: users,
 	}, nil
 }
@@ -331,12 +332,12 @@ func (s *userHTTPService) newUser(username, email, password string) (model.UserI
 	}, nil
 }
 
-func (s *userHTTPService) convertUser(u *model.UserInfoModel) (*vo.User, error) {
+func (s *userHTTPService) convertUser(u *model.UserInfoModel) (*res.User, error) {
 	if u == nil {
 		return nil, nil
 	}
 
-	user := &vo.User{
+	user := &res.User{
 		Id:        u.ID,
 		Username:  u.Username,
 		Phone:     u.Phone,

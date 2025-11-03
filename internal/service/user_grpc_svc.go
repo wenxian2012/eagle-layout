@@ -5,7 +5,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/go-eagle/eagle-layout/api/vo"
+	"github.com/go-eagle/eagle-layout/api/res"
 
 	"github.com/jinzhu/copier"
 	"github.com/spf13/cast"
@@ -375,7 +375,7 @@ func convertUser(u *model.UserInfoModel) (*pb.User, error) {
 	if u == nil {
 		return nil, nil
 	}
-	user := &vo.User{
+	user := &res.User{
 		Id:        u.ID,
 		Username:  u.Username,
 		Phone:     u.Phone,

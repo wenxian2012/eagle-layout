@@ -43,7 +43,7 @@ const docTemplate = `{
                     "200": {
                         "description": "登录成功",
                         "schema": {
-                            "$ref": "#/definitions/vo.LoginResponse"
+                            "$ref": "#/definitions/res.LoginResponse"
                         }
                     },
                     "400": {
@@ -89,7 +89,7 @@ const docTemplate = `{
                     "200": {
                         "description": "登出成功",
                         "schema": {
-                            "$ref": "#/definitions/vo.LogoutResponse"
+                            "$ref": "#/definitions/res.LogoutResponse"
                         }
                     },
                     "400": {
@@ -135,7 +135,7 @@ const docTemplate = `{
                     "200": {
                         "description": "注册成功",
                         "schema": {
-                            "$ref": "#/definitions/vo.RegisterResponse"
+                            "$ref": "#/definitions/res.RegisterResponse"
                         }
                     },
                     "400": {
@@ -177,7 +177,7 @@ const docTemplate = `{
                     "200": {
                         "description": "更新成功",
                         "schema": {
-                            "$ref": "#/definitions/vo.UpdateUserResponse"
+                            "$ref": "#/definitions/res.UpdateUserResponse"
                         }
                     },
                     "400": {
@@ -221,7 +221,7 @@ const docTemplate = `{
                     "200": {
                         "description": "创建成功",
                         "schema": {
-                            "$ref": "#/definitions/vo.CreateUserResponse"
+                            "$ref": "#/definitions/res.CreateUserResponse"
                         }
                     },
                     "400": {
@@ -263,7 +263,7 @@ const docTemplate = `{
                     "200": {
                         "description": "获取成功",
                         "schema": {
-                            "$ref": "#/definitions/vo.BatchGetUsersResponse"
+                            "$ref": "#/definitions/res.BatchGetUsersResponse"
                         }
                     },
                     "400": {
@@ -305,7 +305,7 @@ const docTemplate = `{
                     "200": {
                         "description": "更新成功",
                         "schema": {
-                            "$ref": "#/definitions/vo.UpdatePasswordResponse"
+                            "$ref": "#/definitions/res.UpdatePasswordResponse"
                         }
                     },
                     "400": {
@@ -353,7 +353,7 @@ const docTemplate = `{
                     "200": {
                         "description": "获取成功",
                         "schema": {
-                            "$ref": "#/definitions/vo.GetUserResponse"
+                            "$ref": "#/definitions/res.GetUserResponse"
                         }
                     },
                     "400": {
@@ -557,18 +557,18 @@ const docTemplate = `{
                 }
             }
         },
-        "vo.BatchGetUsersResponse": {
+        "res.BatchGetUsersResponse": {
             "type": "object",
             "properties": {
                 "users": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/vo.User"
+                        "$ref": "#/definitions/res.User"
                     }
                 }
             }
         },
-        "vo.CreateUserResponse": {
+        "res.CreateUserResponse": {
             "type": "object",
             "properties": {
                 "email": {
@@ -582,15 +582,15 @@ const docTemplate = `{
                 }
             }
         },
-        "vo.GetUserResponse": {
+        "res.GetUserResponse": {
             "type": "object",
             "properties": {
                 "user": {
-                    "$ref": "#/definitions/vo.User"
+                    "$ref": "#/definitions/res.User"
                 }
             }
         },
-        "vo.LoginResponse": {
+        "res.LoginResponse": {
             "type": "object",
             "properties": {
                 "access_token": {
@@ -604,7 +604,7 @@ const docTemplate = `{
                 }
             }
         },
-        "vo.LogoutResponse": {
+        "res.LogoutResponse": {
             "type": "object",
             "properties": {
                 "message": {
@@ -612,7 +612,7 @@ const docTemplate = `{
                 }
             }
         },
-        "vo.RegisterResponse": {
+        "res.RegisterResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -623,7 +623,7 @@ const docTemplate = `{
                 }
             }
         },
-        "vo.UpdatePasswordResponse": {
+        "res.UpdatePasswordResponse": {
             "type": "object",
             "properties": {
                 "message": {
@@ -631,48 +631,7 @@ const docTemplate = `{
                 }
             }
         },
-        "vo.UpdateUserResponse": {
-            "type": "object",
-            "properties": {
-                "avatar": {
-                    "type": "string"
-                },
-                "bio": {
-                    "type": "string"
-                },
-                "birthday": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "gender": {
-                    "type": "integer"
-                },
-                "login_at": {
-                    "type": "integer"
-                },
-                "nickname": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "integer"
-                },
-                "updated_at": {
-                    "type": "integer"
-                },
-                "user_id": {
-                    "type": "integer"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "vo.User": {
+        "res.UpdateUserResponse": {
             "type": "object",
             "properties": {
                 "avatar": {
@@ -685,7 +644,52 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "created_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
                     "type": "integer"
+                },
+                "login_at": {
+                    "description": "login time for last times",
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "res.User": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "bio": {
+                    "type": "string"
+                },
+                "birthday": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
                 },
                 "email": {
                     "type": "string"
@@ -698,7 +702,7 @@ const docTemplate = `{
                 },
                 "login_at": {
                     "description": "login time for last times",
-                    "type": "integer"
+                    "type": "string"
                 },
                 "nickname": {
                     "type": "string"
@@ -713,7 +717,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "updated_at": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "username": {
                     "type": "string"

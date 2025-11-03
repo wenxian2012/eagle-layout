@@ -103,14 +103,14 @@ definitions:
     required:
     - user_id
     type: object
-  vo.BatchGetUsersResponse:
+  res.BatchGetUsersResponse:
     properties:
       users:
         items:
-          $ref: '#/definitions/vo.User'
+          $ref: '#/definitions/res.User'
         type: array
     type: object
-  vo.CreateUserResponse:
+  res.CreateUserResponse:
     properties:
       email:
         type: string
@@ -119,12 +119,12 @@ definitions:
       username:
         type: string
     type: object
-  vo.GetUserResponse:
+  res.GetUserResponse:
     properties:
       user:
-        $ref: '#/definitions/vo.User'
+        $ref: '#/definitions/res.User'
     type: object
-  vo.LoginResponse:
+  res.LoginResponse:
     properties:
       access_token:
         type: string
@@ -133,51 +133,24 @@ definitions:
       refresh_token:
         type: string
     type: object
-  vo.LogoutResponse:
+  res.LogoutResponse:
     properties:
       message:
         type: string
     type: object
-  vo.RegisterResponse:
+  res.RegisterResponse:
     properties:
       id:
         type: integer
       username:
         type: string
     type: object
-  vo.UpdatePasswordResponse:
+  res.UpdatePasswordResponse:
     properties:
       message:
         type: string
     type: object
-  vo.UpdateUserResponse:
-    properties:
-      avatar:
-        type: string
-      bio:
-        type: string
-      birthday:
-        type: string
-      email:
-        type: string
-      gender:
-        type: integer
-      login_at:
-        type: integer
-      nickname:
-        type: string
-      phone:
-        type: string
-      status:
-        type: integer
-      updated_at:
-        type: integer
-      user_id:
-        type: integer
-      username:
-        type: string
-    type: object
-  vo.User:
+  res.UpdateUserResponse:
     properties:
       avatar:
         type: string
@@ -186,7 +159,37 @@ definitions:
       birthday:
         type: string
       created_at:
+        type: string
+      email:
+        type: string
+      gender:
         type: integer
+      login_at:
+        description: login time for last times
+        type: string
+      nickname:
+        type: string
+      phone:
+        type: string
+      status:
+        type: integer
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+      username:
+        type: string
+    type: object
+  res.User:
+    properties:
+      avatar:
+        type: string
+      bio:
+        type: string
+      birthday:
+        type: string
+      created_at:
+        type: string
       email:
         type: string
       gender:
@@ -195,7 +198,7 @@ definitions:
         type: integer
       login_at:
         description: login time for last times
-        type: integer
+        type: string
       nickname:
         type: string
       password:
@@ -205,7 +208,7 @@ definitions:
       status:
         type: integer
       updated_at:
-        type: integer
+        type: string
       username:
         type: string
     type: object
@@ -234,7 +237,7 @@ paths:
         "200":
           description: 登录成功
           schema:
-            $ref: '#/definitions/vo.LoginResponse'
+            $ref: '#/definitions/res.LoginResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -265,7 +268,7 @@ paths:
         "200":
           description: 登出成功
           schema:
-            $ref: '#/definitions/vo.LogoutResponse'
+            $ref: '#/definitions/res.LogoutResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -296,7 +299,7 @@ paths:
         "200":
           description: 注册成功
           schema:
-            $ref: '#/definitions/vo.RegisterResponse'
+            $ref: '#/definitions/res.RegisterResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -324,7 +327,7 @@ paths:
         "200":
           description: 创建成功
           schema:
-            $ref: '#/definitions/vo.CreateUserResponse'
+            $ref: '#/definitions/res.CreateUserResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -351,7 +354,7 @@ paths:
         "200":
           description: 更新成功
           schema:
-            $ref: '#/definitions/vo.UpdateUserResponse'
+            $ref: '#/definitions/res.UpdateUserResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -381,7 +384,7 @@ paths:
         "200":
           description: 获取成功
           schema:
-            $ref: '#/definitions/vo.GetUserResponse'
+            $ref: '#/definitions/res.GetUserResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -412,7 +415,7 @@ paths:
         "200":
           description: 获取成功
           schema:
-            $ref: '#/definitions/vo.BatchGetUsersResponse'
+            $ref: '#/definitions/res.BatchGetUsersResponse'
         "400":
           description: 请求参数错误
           schema: {}
@@ -440,7 +443,7 @@ paths:
         "200":
           description: 更新成功
           schema:
-            $ref: '#/definitions/vo.UpdatePasswordResponse'
+            $ref: '#/definitions/res.UpdatePasswordResponse'
         "400":
           description: 请求参数错误
           schema: {}

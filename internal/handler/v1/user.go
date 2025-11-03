@@ -30,7 +30,7 @@ func NewUserHandler(userHTTPService service.UserHTTPService) *UserHandler {
 // @Accept json
 // @Produce json
 // @Param request body req.RegisterRequest true "注册请求"
-// @Success 200 {object} vo.RegisterResponse "注册成功"
+// @Success 200 {object} res.RegisterResponse "注册成功"
 // @Failure 400 {object} error "请求参数错误"
 // @Failure 500 {object} error "内部服务器错误"
 // @Router /v1/auth/register [post]
@@ -57,7 +57,7 @@ func (h *UserHandler) Register(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param request body req.LoginRequest true "登录请求"
-// @Success 200 {object} vo.LoginResponse "登录成功"
+// @Success 200 {object} res.LoginResponse "登录成功"
 // @Failure 400 {object} error "请求参数错误"
 // @Failure 401 {object} error "认证失败"
 // @Failure 500 {object} error "内部服务器错误"
@@ -85,7 +85,7 @@ func (h *UserHandler) Login(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param request body req.LogoutRequest true "登出请求"
-// @Success 200 {object} vo.LogoutResponse "登出成功"
+// @Success 200 {object} res.LogoutResponse "登出成功"
 // @Failure 400 {object} error "请求参数错误"
 // @Failure 401 {object} error "认证失败"
 // @Failure 500 {object} error "内部服务器错误"
@@ -113,7 +113,7 @@ func (h *UserHandler) Logout(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param request body req.CreateUserRequest true "创建用户请求"
-// @Success 200 {object} vo.CreateUserResponse "创建成功"
+// @Success 200 {object} res.CreateUserResponse "创建成功"
 // @Failure 400 {object} error "请求参数错误"
 // @Failure 500 {object} error "内部服务器错误"
 // @Router /v1/users [post]
@@ -140,7 +140,7 @@ func (h *UserHandler) CreateUser(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "用户ID"
-// @Success 200 {object} vo.GetUserResponse "获取成功"
+// @Success 200 {object} res.GetUserResponse "获取成功"
 // @Failure 400 {object} error "请求参数错误"
 // @Failure 404 {object} error "用户不存在"
 // @Failure 500 {object} error "内部服务器错误"
@@ -170,7 +170,7 @@ func (h *UserHandler) GetUser(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param request body req.BatchGetUsersRequest true "批量获取用户请求"
-// @Success 200 {object} vo.BatchGetUsersResponse "获取成功"
+// @Success 200 {object} res.BatchGetUsersResponse "获取成功"
 // @Failure 400 {object} error "请求参数错误"
 // @Failure 500 {object} error "内部服务器错误"
 // @Router /v1/users/batch [post]
@@ -197,7 +197,7 @@ func (h *UserHandler) BatchGetUsers(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param request body req.UpdateUserRequest true "更新用户请求"
-// @Success 200 {object} vo.UpdateUserResponse "更新成功"
+// @Success 200 {object} res.UpdateUserResponse "更新成功"
 // @Failure 400 {object} error "请求参数错误"
 // @Failure 404 {object} error "用户不存在"
 // @Failure 500 {object} error "内部服务器错误"
@@ -225,7 +225,7 @@ func (h *UserHandler) UpdateUser(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param request body req.UpdatePasswordRequest true "更新密码请求"
-// @Success 200 {object} vo.UpdatePasswordResponse "更新成功"
+// @Success 200 {object} res.UpdatePasswordResponse "更新成功"
 // @Failure 400 {object} error "请求参数错误"
 // @Failure 401 {object} error "原密码错误"
 // @Failure 404 {object} error "用户不存在"

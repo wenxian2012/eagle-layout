@@ -1,4 +1,4 @@
-package vo
+package res
 
 import "time"
 
